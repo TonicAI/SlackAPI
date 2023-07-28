@@ -5,6 +5,8 @@
     <DebugType>Full</DebugType>
     <RootNamespace>SlackAPI</RootNamespace>
     <AssemblyName>SlackAPI</AssemblyName>
+      <PackageId>TonicSlackAPI</PackageId> <!-- Add this line with your desired package name -->
+      <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

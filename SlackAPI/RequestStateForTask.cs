@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using SlackAPI.Exceptions;
 
 namespace SlackAPI
 {
@@ -44,6 +46,21 @@ namespace SlackAPI
                 //Anything that doesn't return error 200 throws an exception.  Sucks.  :l
                 response = (HttpWebResponse)we.Response;
                 //TODO: Handle timeouts, etc?
+                
+                if ((int)response.StatusCode == 429)
+                {
+                    var retryInSeconds = 1;
+                    if (we.Response.Headers.AllKeys.Contains("Retry-After"))
+                    {
+                        var retryInSecondsString = we.Response.Headers["Retry-After"];
+                        if (int.TryParse(retryInSecondsString, out var retryInSecondsInt))
+                        {
+                            retryInSeconds = retryInSecondsInt;
+                        }
+                    }
+                   
+                    throw new RateLimitExceededException(TimeSpan.FromSeconds(retryInSeconds));
+                }
             }
 
             K responseObj;

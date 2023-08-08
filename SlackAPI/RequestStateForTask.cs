@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -52,10 +53,13 @@ namespace SlackAPI
             {
                 using (StreamReader reader = new StreamReader(responseReading))
                 {
-                    string responseData = reader.ReadToEnd();
+                    string responseData = await reader.ReadToEndAsync().ConfigureAwait(false);
                     responseObj = responseData.Deserialize<K>();
                 }
             }
+            
+            responseObj.statusCode = (int)response.StatusCode;
+            responseObj.responseHeaders = Enumerable.Range(0, response.Headers.Count).ToDictionary(i => response.Headers.Keys[i], response.Headers.GetValues);
 
             return responseObj;
         }

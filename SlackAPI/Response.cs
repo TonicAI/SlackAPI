@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace SlackAPI
 {
@@ -16,11 +18,13 @@ namespace SlackAPI
         public string needed;
         public string provided;
         public string warning;
+        public int statusCode;
+        public Dictionary<string, string[]> responseHeaders;
 
         public void AssertOk()
         {
             if (!(ok))
-                throw new InvalidOperationException(string.Format("An error occurred: {0}", error));
+                throw new InvalidOperationException($"An error occurred: {error}");
         }
 
         public ResponseMetaData response_metadata;

@@ -665,6 +665,17 @@ namespace SlackAPI
             APIRequestWithToken(callback, parameters.ToArray());
         }
 
+        public void GetPermalink(  Action<PostEphemeralResponse> callback,
+            string channelId,
+            string message_ts)
+        {
+            List<Tuple<string,string>> parameters = new List<Tuple<string,string>>();
+
+            parameters.Add(new Tuple<string,string>("channel", channelId));
+            parameters.Add(new Tuple<string,string>("message_ts", message_ts));
+            APIRequestWithToken(callback, parameters.ToArray());
+        }
+
         public void PostEphemeralMessage(
             Action<PostEphemeralResponse> callback,
             string channelId,

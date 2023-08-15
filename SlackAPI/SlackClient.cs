@@ -175,6 +175,16 @@ namespace SlackAPI
         {
             APIRequestWithToken(callback);
         }
+        
+        public void GetPinsList(Action<PinsListResponse> callback, string channelId)
+        {
+            List<Tuple<string, string>> parameters = new List<Tuple<string, string>>()
+            {
+                Tuple.Create("channel", channelId)
+            };
+
+            APIRequestWithToken(callback, parameters.ToArray());
+        }
 
         public void GetFiles(Action<FileListResponse> callback, string userId = null, DateTime? from = null, DateTime? to = null, int? count = null, int? page = null, FileTypes types = FileTypes.all, string channel = null)
         {

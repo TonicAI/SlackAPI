@@ -218,6 +218,16 @@ namespace SlackAPI
 
             return APIRequestWithTokenAsync<FileListResponse>(parameters.ToArray());
         }
+        
+        public Task<PinsListResponse> GetPinsListAsync(string channelId)
+        {
+            List<Tuple<string, string>> parameters = new List<Tuple<string, string>>()
+            {
+                Tuple.Create("channel", channelId)
+            };
+
+            return APIRequestWithTokenAsync<PinsListResponse>(parameters.ToArray());
+        }
 
         private Task<K> GetHistoryAsync<K>(string channel, DateTime? latest = null, DateTime? oldest = null, int? count = null, bool? unreads = false, string cursor = null, int? limit = null)
             where K : MessageHistory
